@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 //Import the junit library
 import org.junit.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.nio.file.Files;
@@ -50,8 +51,29 @@ public class MarkdownParseTest {
         assertArrayEquals(actual.toArray(), links.toArray());
     }
 
+    // @Test
+    // public void failure(){
+    //     assertEquals(2, 3);
+    // }
+
     @Test
-    public void failure(){
-        assertEquals(2, 2);
+    public void testLabInputOne() throws IOException{
+        String content = Files.readString(Path.of("labtest1.md"));
+        List<String> expected = List.of("'google.com", "google.com", "ucsd.edu");
+        assertEquals(expected, MarkdownParse.getLinks(content));
+    }
+
+    @Test
+    public void testLabInputTwo() throws IOException{
+        String content = Files.readString(Path.of("labtest2.md"));
+        List<String> expected = List.of("a.com","a.com(())","example.com");
+        assertEquals(expected, MarkdownParse.getLinks(content));
+    }
+
+    @Test
+    public void testLabInputThree() throws IOException{
+        String content = Files.readString(Path.of("labtest3.md"));
+        List<String> expected = List.of("https://sites.google.com/eng.ucsd.edu/cse-15l-spring-2022/schedule");
+        assertEquals(expected, MarkdownParse.getLinks(content));
     }
 }
